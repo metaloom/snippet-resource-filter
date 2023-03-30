@@ -43,18 +43,21 @@ public class SnippetFilter extends AbstractResourceFilter {
 	@Override
 	protected void filterFile(MavenResourcesExecution mavenResourcesExecution, File source, File destinationFile) throws MavenFilteringException {
 		try {
-			log.debug("Applying snippet filter to {}", source);
-			String input = Files.readString(source.toPath());
+			String input;
+			if (destinationFile.exists()) {
+				log.debug("Applying snippet filter to {}", destinationFile);
+				input = Files.readString(destinationFile.toPath());
+			} else {
+				log.debug("Applying snippet filter to {}", source);
+				input = Files.readString(source.toPath());
+			}
 			StringWriter writer = new StringWriter();
 			PlainTextSink sink = new PlainTextSink(writer);
 			try (Reader reader = new StringReader(input)) {
 				parser.parse(reader, sink);
 			}
 			String output = writer.toString();
-			if (destinationFile.exists()) {
-				System.out.println("File already there " + destinationFile.getAbsolutePath());
-			}
-			//Files.writeString(destinationFile.toPath(), output);
+			Files.writeString(destinationFile.toPath(), output);
 
 		} catch (Exception e) {
 			throw new MavenFilteringException("Error while parsing content of" + source.getAbsolutePath(), e);
