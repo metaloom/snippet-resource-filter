@@ -40,25 +40,6 @@
       <artifactId>doxia-core</artifactId>
       <version>1.11.1</version>
     </dependency>
-    <dependency>
-      <groupId>org.apache.maven.doxia</groupId>
-      <artifactId>doxia-module-markdown</artifactId>
-      <version>1.11.1</version>
-    </dependency>
-    
-    <dependency>
-      <groupId>org.apache.maven.doxia</groupId>
-      <artifactId>doxia-module-apt</artifactId>
-      <version>1.11.1</version>
-    </dependency>
-
-    <!--
-    <dependency>
-      <groupId>org.apache.maven.shared</groupId>
-    <artifactId>maven-filtering</artifactId>
-      <version>3.3.1</version>
-    </dependency>
-    -->
 
     <!-- Test -->
     <dependency>

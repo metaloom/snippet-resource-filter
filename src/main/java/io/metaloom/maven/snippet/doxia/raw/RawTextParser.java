@@ -1,4 +1,4 @@
-package io.metaloom.maven.snippet.doxia;
+package io.metaloom.maven.snippet.doxia.raw;
 
 import java.io.IOException;
 import java.io.LineNumberReader;
@@ -13,7 +13,6 @@ import org.apache.maven.doxia.macro.MacroExecutionException;
 import org.apache.maven.doxia.macro.MacroRequest;
 import org.apache.maven.doxia.macro.manager.MacroNotFoundException;
 import org.apache.maven.doxia.markup.TextMarkup;
-import org.apache.maven.doxia.module.apt.AptParseException;
 import org.apache.maven.doxia.parser.AbstractTextParser;
 import org.apache.maven.doxia.parser.ParseException;
 import org.apache.maven.doxia.parser.Parser;
@@ -29,14 +28,11 @@ public class RawTextParser extends AbstractTextParser implements TextMarkup {
 	// Markup separators
 	// ----------------------------------------------------------------------
 
-	/** APT percent markup char: '%' */
+	/** RAW percent markup char: '%' */
 	private static final char PERCENT = '%';
 
-	/** APT tab markup char: '\t' */
+	/** RAW tab markup char: '\t' */
 	private static final char TAB = '\t';
-
-	/** Macro event id */
-	private static final int MACRO = 1;
 
 	/** An array of 85 spaces. */
 	protected static final char[] SPACES;
@@ -59,9 +55,6 @@ public class RawTextParser extends AbstractTextParser implements TextMarkup {
 
 	/** the sink to receive the events. */
 	protected Sink sink;
-
-	/** a line of AptSource. */
-	// protected String line;
 
 	/**
 	 * Map of warn messages with a String as key to describe the error type and a Set as value. Using to reduce warn messages.
@@ -100,7 +93,7 @@ public class RawTextParser extends AbstractTextParser implements TextMarkup {
 			IOUtil.copy(source, contentWriter);
 			sourceContent = contentWriter.toString();
 		} catch (IOException e) {
-			throw new AptParseException("IOException: " + e.getMessage(), e);
+			throw new RawParseException("IOException: " + e.getMessage(), e);
 		}
 
 		try {
@@ -115,15 +108,15 @@ public class RawTextParser extends AbstractTextParser implements TextMarkup {
 			while ((line = lineReader.readLine()) != null) {
 
 				if (line != null && line.length() >= 1 && line.charAt(0) == PERCENT) {
-					new MacroBlock(0, line).traverse();
+					new MacroBlock(line).traverse();
 				} else {
 					sink.rawText(line);
 				}
 			}
 
-		} catch (AptParseException | IOException ape) {
+		} catch (RawParseException | IOException ape) {
 			// TODO handle column number
-			throw new AptParseException(ape.getMessage(), ape, getSourceName(), getSourceLineNumber(), -1);
+			throw new RawParseException(ape.getMessage(), ape, getSourceName(), getSourceLineNumber(), -1);
 		} finally {
 			logWarnings();
 
@@ -133,7 +126,7 @@ public class RawTextParser extends AbstractTextParser implements TextMarkup {
 	}
 
 	/**
-	 * Returns the name of the Apt source document.
+	 * Returns the name of the Raw source document.
 	 *
 	 * @return the source name.
 	 */
@@ -143,7 +136,7 @@ public class RawTextParser extends AbstractTextParser implements TextMarkup {
 	}
 
 	/**
-	 * Returns the current line number of the Apt source document.
+	 * Returns the current line number of the Raw source document.
 	 *
 	 * @return the line number.
 	 */
@@ -260,56 +253,18 @@ public class RawTextParser extends AbstractTextParser implements TextMarkup {
 
 	/** A block of an apt source document. */
 	private abstract class Block {
-		/** type. */
-		protected int type;
-
-		/** indent. */
-		protected int indent;
 
 		/** text. */
 		protected String text;
 
 		/**
-		 * Constructor.
-		 *
-		 * @param type
-		 *            the block type.
-		 * @param indent
-		 *            indent.
-		 * @throws AptParseException
-		 *             AptParseException
-		 */
-		Block(int type, int indent)
-			throws AptParseException {
-			this(type, indent, null);
-		}
-
-		/**
-		 * Constructor.
-		 *
-		 * @param type
-		 *            type.
-		 * @param indent
-		 *            indent.
-		 * @param firstLine
-		 *            the first line.
-		 * @throws AptParseException
-		 *             AptParseException
-		 */
-		Block(int type, int indent, String firstLine)
-			throws AptParseException {
-			this.type = type;
-			this.indent = indent;
-		}
-
-		/**
 		 * Parse the block.
 		 *
-		 * @throws AptParseException
+		 * @throws RawParseException
 		 *             if something goes wrong.
 		 */
 		public abstract void traverse()
-			throws AptParseException;
+			throws RawParseException;
 
 	}
 
@@ -319,23 +274,19 @@ public class RawTextParser extends AbstractTextParser implements TextMarkup {
 		/**
 		 * Constructor.
 		 *
-		 * @param indent
-		 *            indent.
 		 * @param firstLine
 		 *            the first line.
-		 * @throws AptParseException
-		 *             AptParseException
+		 * @throws RawParseException
+		 *             RawParseException
 		 */
-		MacroBlock(int indent, String firstLine)
-			throws AptParseException {
-			super(MACRO, indent);
-
+		MacroBlock(String firstLine)
+			throws RawParseException {
 			text = firstLine;
 		}
 
 		/** {@inheritDoc} */
 		public void traverse()
-			throws AptParseException {
+			throws RawParseException {
 			if (isSecondParsing()) {
 				return;
 			}
@@ -357,7 +308,7 @@ public class RawTextParser extends AbstractTextParser implements TextMarkup {
 				String[] param = StringUtils.split(params[i], "=");
 
 				if (param.length == 1) {
-					throw new AptParseException("Missing 'key=value' pair for macro parameter: " + params[i]);
+					throw new RawParseException("Missing 'key=value' pair for macro parameter: " + params[i]);
 				}
 
 				String key = unescapeForMacro(param[0]);
@@ -365,6 +316,7 @@ public class RawTextParser extends AbstractTextParser implements TextMarkup {
 
 				parameters.put(key, value);
 			}
+			parameters.put("verbatim", "false");
 
 			// getBasedir() does not work in multi-module builds, see DOXIA-373
 			// the basedir should be injected from here, see DOXIA-224
@@ -372,9 +324,9 @@ public class RawTextParser extends AbstractTextParser implements TextMarkup {
 			try {
 				RawTextParser.this.executeMacro(macroId, request, sink);
 			} catch (MacroExecutionException e) {
-				throw new AptParseException("Unable to execute macro in the APT document", e);
+				throw new RawParseException("Unable to execute macro in the RAW document", e);
 			} catch (MacroNotFoundException e) {
-				throw new AptParseException("Unable to find macro used in the APT document", e);
+				throw new RawParseException("Unable to find macro used in the RAW document", e);
 			}
 		}
 

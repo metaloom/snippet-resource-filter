@@ -20,7 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.plexus.build.incremental.BuildContext;
 
-import io.metaloom.maven.snippet.doxia.PlainTextSink;
+import io.metaloom.maven.snippet.doxia.raw.PlainTextSink;
 
 /**
  * @plexus.component role="org.apache.maven.shared.filtering.MavenResourcesFiltering" role-hint="snippetFilter"

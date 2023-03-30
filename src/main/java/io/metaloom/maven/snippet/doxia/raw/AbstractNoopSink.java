@@ -1,4 +1,4 @@
-package io.metaloom.maven.snippet.doxia;
+package io.metaloom.maven.snippet.doxia.raw;
 
 import java.io.IOException;
 import java.io.Writer;

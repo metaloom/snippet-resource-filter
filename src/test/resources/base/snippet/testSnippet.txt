@@ -1,7 +1,7 @@
 preamble
 
            SNIPPET START firstId
-                   first snippet
+						first snippet
            SNIPPET END   firstId
 
 interlude

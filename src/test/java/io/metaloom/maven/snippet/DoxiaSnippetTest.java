@@ -12,7 +12,7 @@ import org.codehaus.plexus.PlexusTestCase;
 import org.codehaus.plexus.component.repository.exception.ComponentLookupException;
 import org.junit.Test;
 
-import io.metaloom.maven.snippet.doxia.PlainTextSink;
+import io.metaloom.maven.snippet.doxia.raw.PlainTextSink;
 
 public class DoxiaSnippetTest extends PlexusTestCase {
 
@@ -22,6 +22,9 @@ public class DoxiaSnippetTest extends PlexusTestCase {
 
 		// SNIPPET START test_snippet
 		String helloWorld = "helloWorld";
+			//yes
+				//works
+			//well
 		// SNIPPET END test_snippet
 
 		// MarkdownHtmlParser mParser = new MarkdownHtmlParser();
