@@ -42,41 +42,20 @@ public class SnippetFilter extends AbstractResourceFilter {
 
 	@Override
 	protected void filterFile(MavenResourcesExecution mavenResourcesExecution, File source, File destinationFile) throws MavenFilteringException {
-		if (parser != null) {
-			System.out.println("YEAH");
-		} else {
-			System.out.println("Boohoo");
-		}
-
 		try {
-			// MarkdownHtmlParser mParser = new MarkdownHtmlParser();
+			log.debug("Applying snippet filter to {}", source);
 			String input = Files.readString(source.toPath());
-			// String input = """
-			// # The Input doc
-			// ## L2
-			// A [link](Bluar)
-			// **Blub**
-			//
-			// %{snippet|id=firstId|file=src/test/resources/base/snippet/testSnippet.txt}
-			//
-			// The End
-			//
-			// """;
-
 			StringWriter writer = new StringWriter();
 			PlainTextSink sink = new PlainTextSink(writer);
 			try (Reader reader = new StringReader(input)) {
 				parser.parse(reader, sink);
 			}
-			System.out.println("----------");
-			System.out.println(writer.toString());
-			System.out.println("----------");
+			String output = writer.toString();
+			if (destinationFile.exists()) {
+				System.out.println("File already there " + destinationFile.getAbsolutePath());
+			}
+			//Files.writeString(destinationFile.toPath(), output);
 
-			log.info("Filtering " + source.getAbsolutePath());
-			log.info("Filtering " + destinationFile.getAbsolutePath());
-			File baseDir = mavenResourcesExecution.getMavenProject().getBasedir();
-			log.info("BaseDir:" + baseDir.getAbsolutePath());
-			log.info("PP " + mavenResourcesExecution.getOutputDirectory().getAbsolutePath());
 		} catch (Exception e) {
 			throw new MavenFilteringException("Error while parsing content of" + source.getAbsolutePath(), e);
 		}

@@ -41,7 +41,6 @@ public abstract class AbstractResourceFilter implements MavenResourcesFiltering 
 	public AbstractResourceFilter(MavenFileFilter mavenFileFilter, BuildContext buildContext) {
 		this.mavenFileFilter = requireNonNull(mavenFileFilter);
 		this.buildContext = requireNonNull(buildContext);
-		System.out.println("SNIPPET");
 	}
 
 	@Override
@@ -59,7 +58,6 @@ public abstract class AbstractResourceFilter implements MavenResourcesFiltering 
 				|| buildContext.hasDelta(getRelativeOutputDirectory(mavenResourcesExecution));
 			log.debug("ignoreDelta " + ignoreDelta);
 
-			System.out.println("TESTING " + targetPath + " to " + outputDirectory.getAbsolutePath());
 			File resourceDirectory = (resource.getDirectory() == null) ? null : new File(resource.getDirectory());
 
 			Scanner scanner = buildContext.newScanner(resourceDirectory, ignoreDelta);
