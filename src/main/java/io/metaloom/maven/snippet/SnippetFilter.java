@@ -4,18 +4,16 @@ import java.io.File;
 import java.nio.file.Files;
 
 import javax.inject.Inject;
-import javax.inject.Named;
-import javax.inject.Singleton;
 
 import org.apache.maven.shared.filtering.MavenFilteringException;
 import org.apache.maven.shared.filtering.MavenResourcesExecution;
 import org.apache.maven.shared.filtering.MavenResourcesFiltering;
+import org.codehaus.plexus.component.annotations.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.plexus.build.incremental.BuildContext;
 
-@Singleton
-@Named("snippetFilter")
+@Component(role = MavenResourcesFiltering.class, hint = "snippetFilter")
 public class SnippetFilter extends AbstractResourceFilter {
 
 	/** RAW percent markup char: '%' */
