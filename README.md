@@ -4,11 +4,11 @@ This project contains an additional filter for the `maven-resource-plugin`.
 <dependency>
     <groupId>io.metaloom.maven</groupId>
     <artifactId>snippet-resource-filter</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.0</version>
 </dependency>
 ```
 
-It can be used to resolve [doxia snippet macros](https://maven.apache.org/doxia/macros/index.html#snippet-macro) in resources.
+It can be used to resolve [doxia style snippet macros](https://maven.apache.org/doxia/macros/index.html#snippet-macro) in resources.
 
 ## Example
 
@@ -68,7 +68,7 @@ This configuration will filter the `${project.basedir}/.github/md/README.md` fil
         <dependency>
             <groupId>io.metaloom.maven</groupId>
             <artifactId>snippet-resource-filter</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.1.0</version>
         </dependency>
     </dependencies>
 </plugin>
