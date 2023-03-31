@@ -34,13 +34,6 @@
       <version>3.9.1</version>
     </dependency>
 
-    <!-- Doxia for snippet support -->
-    <dependency>
-      <groupId>org.apache.maven.doxia</groupId>
-      <artifactId>doxia-core</artifactId>
-      <version>1.11.1</version>
-    </dependency>
-
     <!-- Test -->
     <dependency>
       <groupId>org.apache.maven.doxia</groupId>
