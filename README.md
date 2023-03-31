@@ -1,10 +1,12 @@
-This project contains an additional filter for the `maven-resource-plugin`. 
+# Snippet Resource Filter
+
+This project contains an additional filter for the `maven-resource-plugin` maven plugin.
 
 ```xml
 <dependency>
     <groupId>io.metaloom.maven</groupId>
     <artifactId>snippet-resource-filter</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
 </dependency>
 ```
 
@@ -68,7 +70,7 @@ This configuration will filter the `${project.basedir}/.github/md/README.md` fil
         <dependency>
             <groupId>io.metaloom.maven</groupId>
             <artifactId>snippet-resource-filter</artifactId>
-            <version>0.1.0</version>
+            <version>0.1.1</version>
         </dependency>
     </dependencies>
 </plugin>
