@@ -17,7 +17,6 @@ import org.apache.commons.io.IOUtils;
 import org.apache.maven.model.Resource;
 import org.apache.maven.shared.filtering.FilterWrapper;
 import org.apache.maven.shared.filtering.FilteringUtils;
-import org.apache.maven.shared.filtering.MavenFileFilter;
 import org.apache.maven.shared.filtering.MavenFilteringException;
 import org.apache.maven.shared.filtering.MavenResourcesExecution;
 import org.apache.maven.shared.filtering.MavenResourcesFiltering;
@@ -34,12 +33,9 @@ public abstract class AbstractResourceFilter implements MavenResourcesFiltering 
 
 	private static final String[] DEFAULT_INCLUDES = { "**/**" };
 
-	private final MavenFileFilter mavenFileFilter;
-
 	private final BuildContext buildContext;
 
-	public AbstractResourceFilter(MavenFileFilter mavenFileFilter, BuildContext buildContext) {
-		this.mavenFileFilter = requireNonNull(mavenFileFilter);
+	public AbstractResourceFilter(BuildContext buildContext) {
 		this.buildContext = requireNonNull(buildContext);
 	}
 

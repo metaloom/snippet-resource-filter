@@ -7,7 +7,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import org.apache.maven.shared.filtering.MavenFileFilter;
 import org.apache.maven.shared.filtering.MavenFilteringException;
 import org.apache.maven.shared.filtering.MavenResourcesExecution;
 import org.apache.maven.shared.filtering.MavenResourcesFiltering;
@@ -15,9 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.plexus.build.incremental.BuildContext;
 
-/**
- * @plexus.component role="org.apache.maven.shared.filtering.MavenResourcesFiltering" role-hint="snippetFilter"
- */
 @Singleton
 @Named("snippetFilter")
 public class SnippetFilter extends AbstractResourceFilter {
@@ -31,8 +27,8 @@ public class SnippetFilter extends AbstractResourceFilter {
 	private static final Logger log = LoggerFactory.getLogger(MavenResourcesFiltering.class);
 
 	@Inject
-	public SnippetFilter(MavenFileFilter mavenFileFilter, BuildContext buildContext) {
-		super(mavenFileFilter, buildContext);
+	public SnippetFilter(BuildContext buildContext) {
+		super(buildContext);
 	}
 
 	@Override

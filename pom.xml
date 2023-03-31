@@ -36,13 +36,6 @@
 
     <!-- Test -->
     <dependency>
-      <groupId>org.apache.maven.doxia</groupId>
-      <artifactId>doxia-core</artifactId>
-      <version>1.11.1</version>
-      <type>test-jar</type>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>org.codehaus.plexus</groupId>
       <artifactId>plexus-testing</artifactId>
       <version>1.1.0</version>
