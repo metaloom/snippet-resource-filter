@@ -18,5 +18,6 @@ public class SnippetMacroTest {
 		params.put("id", "firstId");
 		String out = macro.execute(params, new File("."));
 		assertNotNull(out);
+		System.out.println(out);
 	}
 }

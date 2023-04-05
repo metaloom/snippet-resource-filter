@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.metaloom.maven</groupId>
   <artifactId>snippet-resource-filter</artifactId>
-  <version>0.1.1</version>
+  <version>0.1.2</version>
 
   <parent>
     <groupId>io.metaloom</groupId>
@@ -17,7 +17,6 @@
   </properties>
 
   <dependencies>
-
     <dependency>
       <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-resources-plugin</artifactId>
