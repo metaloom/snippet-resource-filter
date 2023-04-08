@@ -6,7 +6,7 @@ This project contains an additional filter for the `maven-resource-plugin` maven
 <dependency>
     <groupId>io.metaloom.maven</groupId>
     <artifactId>snippet-resource-filter</artifactId>
-    <version>0.1.1</version>
+    <version>0.1.2</version>
 </dependency>
 ```
 
@@ -15,63 +15,63 @@ It can be used to resolve [doxia style snippet macros](https://maven.apache.org/
 ## Example
 
 .Example
-```
+
+```bash
 # My Document
 
-.Example
----
+Include snippet here:
 %{snippet|id=firstId|file=src/test/resources/base/snippet/testSnippet.txt}
----
+
 ```
 
 .testSnippet.txt
-```
-SNIPPET START firstId
+```bash
+# SNIPPET START firstId
 The content that should be included
-SNIPPET END firstId
+# SNIPPET END firstId
 ```
 
 ## Maven
 
-This configuration will filter the `${project.basedir}/.github/md/README.md` file and place the output in `${project.basedir}/README.md`.
+This configuration will filter the `/home/jotschi/workspaces/metaloom/snippet-resource-filter/.github/md/README.md` file and place the output in `/home/jotschi/workspaces/metaloom/snippet-resource-filter/README.md`.
 
 ```xml
 <plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-resources-plugin</artifactId>
-    <version>3.3.1</version>
-    <inherited>false</inherited>
-    <executions>
-        <execution>
-            <id>readme-md</id>
-            <phase>clean</phase>
-            <goals>
-                <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-                <outputDirectory>${project.basedir}</outputDirectory>
-                <resources>
-                    <resource>
-                        <directory>${project.basedir}/.github/md</directory>
-                        <includes>
-                            <include>README.md</include>
-                        </includes>
-                        <filtering>true</filtering>
-                    </resource>
-                </resources>
-                <encoding>UTF-8</encoding>
-                <mavenFilteringHints>
-                    <mavenFilteringHint>snippetFilter</mavenFilteringHint>
-                </mavenFilteringHints>
-            </configuration>
-        </execution>
-    </executions>
-    <dependencies>
-        <dependency>
-            <groupId>io.metaloom.maven</groupId>
-            <artifactId>snippet-resource-filter</artifactId>
-            <version>0.1.1</version>
-        </dependency>
-    </dependencies>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-resources-plugin</artifactId>
+  <version>3.3.1</version>
+  <inherited>false</inherited>
+  <executions>
+    <execution>
+      <id>readme-md</id>
+      <phase>clean</phase>
+      <goals>
+        <goal>copy-resources</goal>
+      </goals>
+      <configuration>
+        <outputDirectory>${project.basedir}</outputDirectory>
+        <resources>
+          <resource>
+            <directory>${project.basedir}/.github/md</directory>
+            <includes>
+              <include>README.md</include>
+            </includes>
+            <filtering>true</filtering>
+          </resource>
+        </resources>
+        <encoding>UTF-8</encoding>
+        <mavenFilteringHints>
+          <mavenFilteringHint>snippetFilter</mavenFilteringHint>
+        </mavenFilteringHints>
+      </configuration>
+    </execution>
+  </executions>
+  <dependencies>
+    <dependency>
+      <groupId>io.metaloom.maven</groupId>
+      <artifactId>snippet-resource-filter</artifactId>
+      <version>0.1.1</version>
+    </dependency>
+  </dependencies>
 </plugin>
 ```

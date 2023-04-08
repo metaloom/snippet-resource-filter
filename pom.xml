@@ -1,6 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.metaloom.maven</groupId>
   <artifactId>snippet-resource-filter</artifactId>
@@ -61,6 +60,46 @@
 
   <build>
     <plugins>
+      <!-- SNIPPET START plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.3.1</version>
+        <inherited>false</inherited>
+        <executions>
+          <execution>
+            <id>readme-md</id>
+            <phase>clean</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.basedir}</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${project.basedir}/.github/md</directory>
+                  <includes>
+                    <include>README.md</include>
+                  </includes>
+                  <filtering>true</filtering>
+                </resource>
+              </resources>
+              <encoding>UTF-8</encoding>
+              <mavenFilteringHints>
+                <mavenFilteringHint>snippetFilter</mavenFilteringHint>
+              </mavenFilteringHints>
+            </configuration>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>io.metaloom.maven</groupId>
+            <artifactId>snippet-resource-filter</artifactId>
+            <version>0.1.1</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+      <!-- SNIPPET END plugin -->
       <plugin>
         <groupId>org.codehaus.plexus</groupId>
         <artifactId>plexus-component-metadata</artifactId>
