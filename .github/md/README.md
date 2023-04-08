@@ -33,7 +33,7 @@ The content that should be included
 
 ## Maven
 
-This configuration will filter the `${project.basedir}/.github/md/README.md` file and place the output in `${project.basedir}/README.md`.
+This configuration will filter the `.github/md/README.md` file and place the output in `README.md`.
 
 ```xml
 %{snippet|id=plugin|file=pom.xml}

@@ -33,21 +33,24 @@ The content that should be included
 
 ## Maven
 
-This configuration will filter the `/home/jotschi/workspaces/metaloom/snippet-resource-filter/.github/md/README.md` file and place the output in `/home/jotschi/workspaces/metaloom/snippet-resource-filter/README.md`.
+This configuration will filter the `.github/md/README.md` file and place the output in `README.md`.
 
 ```xml
 <plugin>
   <groupId>org.apache.maven.plugins</groupId>
   <artifactId>maven-resources-plugin</artifactId>
   <version>3.3.1</version>
+  <!-- We don't want submodules to run the execution as well -->
   <inherited>false</inherited>
   <executions>
     <execution>
       <id>readme-md</id>
+      <!-- Run the filter on the `mvn clean` -->
       <phase>clean</phase>
       <goals>
         <goal>copy-resources</goal>
       </goals>
+      <!-- Configuration to filter only the README.md file -->
       <configuration>
         <outputDirectory>${project.basedir}</outputDirectory>
         <resources>
@@ -60,6 +63,7 @@ This configuration will filter the `/home/jotschi/workspaces/metaloom/snippet-re
           </resource>
         </resources>
         <encoding>UTF-8</encoding>
+        <!-- Reference the snippet filter -->
         <mavenFilteringHints>
           <mavenFilteringHint>snippetFilter</mavenFilteringHint>
         </mavenFilteringHints>
@@ -70,7 +74,7 @@ This configuration will filter the `/home/jotschi/workspaces/metaloom/snippet-re
     <dependency>
       <groupId>io.metaloom.maven</groupId>
       <artifactId>snippet-resource-filter</artifactId>
-      <version>0.1.1</version>
+      <version>0.1.2</version>
     </dependency>
   </dependencies>
 </plugin>
